@@ -1,0 +1,32 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="poputil.css">
+	<script type="text/javascript" src="poputil.js"></script>
+
+	<script type="text/javascript">
+		function popOpen()
+		{
+			poputil({
+				type: 'html',
+				content:
+`
+<style type="text/css">
+</style>
+
+<div>
+	<h2>Content</h2>
+
+	<pre>
+		Example text.
+	</pre>
+</div>
+`
+			});
+		}
+	</script>
+</head>
+
+<body>
+	<button onclick="popOpen();">Open</button>
+</body>
+</html>

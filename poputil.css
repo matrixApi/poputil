@@ -1,0 +1,26 @@
+#--poputil-window
+{
+	padding: 10px;
+	position: fixed; /* absolute? */
+	width: calc(100% - 20px);
+	height: 100%;
+	left: 0;
+	top: 0;
+	background-color: rgba(100, 100, 100, .65);
+}
+
+#--poputil-client
+{
+	padding: 10px;
+	border: solid thin black;
+	background-color: rgba(100, 100, 100, .85);
+}
+
+.poputil-hidden
+{
+	display: none;
+}
+
+.poputil-frame
+{
+}
