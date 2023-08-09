@@ -50,6 +50,17 @@ function poputil_setClientSizeAndPosition(c, width, height)
 	c.clientHeight = height;
 }
 
+function poputil_clearContents(w)
+{
+	w.innerHTML = '';
+}
+
+function poputil_appendClient(w, c)
+{
+	poputil_clearContents(w);
+	w.appendChild(c);
+}
+
 function poputilCreateClient(w, options)
 {
 	const {type, content, width = undefined, height = undefined} = options;
@@ -68,7 +79,8 @@ function poputilCreateClient(w, options)
 
 	poputil_setClientSizeAndPosition(c, width, height);
 
-	w.appendChild(c);
+	poputil_appendClient(w, c);
+
 	c.classList.remove('poputil-hidden');
 	w.classList.remove('poputil-hidden');
 
