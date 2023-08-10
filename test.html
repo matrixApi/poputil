@@ -4,7 +4,7 @@
 	<script type="text/javascript" src="poputil.js"></script>
 
 	<script type="text/javascript">
-		function popOpen()
+		function popOpen(element)
 		{
 			poputil({
 				type: 'html',
@@ -21,12 +21,21 @@
 	</pre>
 </div>
 `
-			});
+			}, element);
+		}
+
+		function popOpen_frame(element)
+		{
+			poputil({
+				type: 'iframe',
+				content: document.location.href
+			}, element);
 		}
 	</script>
 </head>
 
 <body>
-	<button onclick="popOpen();">Open</button>
+	<button onclick="popOpen(this);">Open</button>
+	<button onclick="popOpen_frame(this);">Frame</button>
 </body>
 </html>
