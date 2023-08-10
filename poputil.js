@@ -23,7 +23,7 @@ function poputil_removeKeyupEvent()
 function poputil_closeWindow()
 {
 	const w = document.getElementById(poputil_windowName); // event.target;
-	w.classList.add('poputil-hidden');
+	w.classList.add('poputil-hidden'); // , 'poputil-window-default');
 	w.classList.remove('poputil-window-active');
 
 	const c = document.getElementById(poputil_clientName);
@@ -62,7 +62,7 @@ function poputil_createWindow()
 {
 	w = document.createElement('div');
 	w.id = poputil_windowName;
-	w.classList.add('poputil-hidden');
+	w.classList.add('poputil-window-default', 'poputil-hidden');
 
 	document.body.appendChild(w);
 
@@ -77,7 +77,7 @@ function poputilWindow()
 
 function poputil_buildIFrame(link)
 {
-	return `<iframe class="poputil-frame" src="${link}"></iframe>`;
+	return `<iframe class="--poputil-frame" src="${link}"></iframe>`;
 }
 
 function poputil_showElement(e)
@@ -88,6 +88,7 @@ function poputil_hideElement(e)
 function poputil_showWindow(w)
 {
 	poputil_showElement(w);
+	// w.classList.remove('poputil-window-default');
 	w.classList.add('poputil-window-active');
 }
 
@@ -118,11 +119,16 @@ function poputil_setClientSizeAndPosition(c, width, height, windowWidth, windowH
 	width = poputil_parseSize(width, poputil_defaultWidth, windowWidth);
 	height = poputil_parseSize(height, poputil_defaultHeight, windowHeight);
 
-	c.clientWidth = width;
-	c.clientHeight = height;
+	var s = c.style;
 
-	// c.style.top = (windowWidth - width) / 2;
-	// c.style.left = (windowHeight - height) / 2;
+	// c.clientWidth = width;
+	// c.clientHeight = height;
+
+	s.width = width;
+	s.height = height;
+
+	s.left = (windowWidth - width) / 2;
+	s.top = (windowHeight - height) / 2;
 
 	// console.log(`top: ${c.style.top} left: ${c.style.left}`);
 	// console.log(`width: ${width} height ${height}`);

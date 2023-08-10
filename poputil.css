@@ -6,16 +6,26 @@
 	height: 100%;
 	left: 0;
 	top: 0;
+
+	transition: background-color 0.5s ease;
+}
+
+.poputil-window-default
+{
+	background-color: white;
+
+	/*background-color: rgba(100, 100, 100, .65);	*/
 }
 
 .poputil-window-active
 {
 	background-color: rgba(100, 100, 100, .65);	
-	transition: background-color 2s 2s;
 
-	// ease-in
-	// ease-out
-	// ease-in-out
+	/*
+	ease-in
+	ease-out
+	ease-in-out
+	*/
 }
 
 #--poputil-client
@@ -35,6 +45,7 @@
 	display: none;
 }
 
-.poputil-frame
+.--poputil-frame
 {
+	border: none;
 }
