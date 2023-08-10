@@ -4,6 +4,8 @@ const poputil_clientName = '--poputil-client';
 const poputil_escapeKeyCode = 27;
 var poputil_keyupWindow_current = null;
 
+var poputil_client_defaultStyle = '--poputil-client-default-style';
+
 function poputil_parentOnlyEvent(element, inner)
 {
 	return function poputil_parentOnlyOuter(event)
@@ -22,6 +24,7 @@ function poputil_closeWindow()
 {
 	const w = document.getElementById(poputil_windowName); // event.target;
 	w.classList.add('poputil-hidden');
+	w.classList.remove('poputil-window-active');
 
 	const c = document.getElementById(poputil_clientName);
 	c.parentElement.removeChild(c);
@@ -82,6 +85,12 @@ function poputil_showElement(e)
 function poputil_hideElement(e)
 { e.classList.add('poputil-hidden'); }
 
+function poputil_showWindow(w)
+{
+	poputil_showElement(w);
+	w.classList.add('poputil-window-active');
+}
+
 function poputil_defaultWidth()
 { return 600; }
 
@@ -133,11 +142,15 @@ function poputil_appendClient(w, c)
 
 function poputilCreateClient(w, options)
 {
-	const {type, content, width = undefined, height = undefined} = options;
+	const {type, content, width = undefined, height = undefined,
+		   client_style = poputil_client_defaultStyle} = options;
+
 	const c = document.createElement('div');
 
 	c.id = poputil_clientName;
 	poputil_hideElement(c);
+
+	client_style && c.classList.add(client_style);
 
 	if (type == 'html') {
 		c.innerHTML = content;
@@ -158,7 +171,7 @@ function poputilCreateClient(w, options)
 	poputil_addKeyupEvent();
 
 	poputil_showElement(c);
-	poputil_showElement(w);
+	poputil_showWindow(w);
 
 	return c;
 }

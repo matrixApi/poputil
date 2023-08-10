@@ -6,15 +6,28 @@
 	height: 100%;
 	left: 0;
 	top: 0;
-	background-color: rgba(100, 100, 100, .65);
+}
+
+.poputil-window-active
+{
+	background-color: rgba(100, 100, 100, .65);	
+	transition: background-color 2s 2s;
+
+	// ease-in
+	// ease-out
+	// ease-in-out
 }
 
 #--poputil-client
 {
+	position: relative;
+}
+
+.--poputil-client-default-style
+{
 	padding: 10px;
 	border: solid thin black;
 	background-color: rgba(100, 100, 100, .85);
-	position: relative;
 }
 
 .poputil-hidden

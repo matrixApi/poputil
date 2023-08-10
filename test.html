@@ -3,11 +3,22 @@
 	<link rel="stylesheet" type="text/css" href="poputil.css">
 	<script type="text/javascript" src="poputil.js"></script>
 
+	<style type="text/css">
+	.my-style
+	{
+		padding: 10px;
+		border: solid thin white;
+		border-radius: 10px;
+		background-color: rgba(250, 250, 250, .85);
+	}
+	</style>
+
 	<script type="text/javascript">
 		function popOpen(element)
 		{
 			poputil({
 				type: 'html',
+				client_style: 'my-style',
 				content:
 `
 <style type="text/css">
@@ -28,6 +39,7 @@
 		{
 			poputil({
 				type: 'iframe',
+				client_style: 'my-style',
 				content: document.location.href
 			}, element);
 		}
