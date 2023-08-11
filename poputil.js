@@ -167,8 +167,11 @@ function poputil_reveal(w, c)
 	}, poputil_revealTimeout);
 }
 
+// Todo: closePopup API
+
 function poputilCreateClient(w, options)
 {
+	// Todo: onOpen
 	const {type, content, width = undefined, height = undefined,
 		   client_style = poputil_client_defaultStyle} = options;
 
@@ -211,3 +214,7 @@ function poputil(options, blurElement)
 
 	return c;
 }
+
+
+// Object Model.
+var poputilObject = {open: poputil};
