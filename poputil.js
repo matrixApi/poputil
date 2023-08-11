@@ -1,3 +1,5 @@
+var shadowbox$enabled = false;
+
 const poputil_windowName = '--poputil-window';
 const poputil_clientName = '--poputil-client';
 
@@ -187,7 +189,7 @@ function poputilCreateClient(w, options)
 	} else if (type == 'iframe') {
 		c.innerHTML = poputil_buildIFrame(content);
 	} else {
-		throw new error(`Unknown type: ${type}`);
+		throw new Error(`Unknown type: ${type}`);
 	}
 
 	poputil_setClientSizeAndPosition
@@ -218,3 +220,15 @@ function poputil(options, blurElement)
 
 // Object Model.
 var poputilObject = {open: poputil};
+
+var poputilObject_ShadowboxCompat =
+{
+	fromShadowboxOpenOptions: function poputilOpen_fromShadowboxOpenOptions(options)
+	{
+		const {player, content, width = undefined, height = undefined} = options;
+		return {type: player, content, width, height};
+	},
+
+	open: function poputilOpen_ShadowboxCompat(options)
+	{ return poputil(poputilObject_ShadowboxCompat.fromShadowboxOpenOptions(options)); }
+};
