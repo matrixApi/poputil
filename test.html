@@ -22,10 +22,16 @@
 				content:
 `
 <style type="text/css">
+#content
+{
+	padding: 0px 6px 6px 20px;
+}
 </style>
 
-<div>
+<div id="content">
 	<h2>Content</h2>
+
+	<!-- <button onclick="toggleWindow();">Toggle</button> -->
 
 	<pre>
 		Example text.
@@ -43,6 +49,12 @@
 				content: document.location.href
 			}, element);
 		}
+
+		// function toggleWindow()
+		// {
+		// 	const w = poputilWindow$();
+		// 	w.classList.toggle('poputil-window-active');
+		// }
 	</script>
 </head>
 

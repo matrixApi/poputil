@@ -20,10 +20,14 @@ function poputil_removeKeyupEvent()
 { document.body.removeEventListener
 	('keyup', poputil_keyupWindow_current); }
 
+function poputilWindow$()
+{ return document.getElementById(poputil_windowName); }
+
 function poputil_closeWindow()
 {
-	const w = document.getElementById(poputil_windowName); // event.target;
-	w.classList.add('poputil-hidden'); // , 'poputil-window-default');
+	const w = poputilWindow$(); // event.target;
+	poputil_hideElement(w);
+	// w.classList.add('poputil-window-default');
 	w.classList.remove('poputil-window-active');
 
 	const c = document.getElementById(poputil_clientName);
@@ -62,7 +66,8 @@ function poputil_createWindow()
 {
 	w = document.createElement('div');
 	w.id = poputil_windowName;
-	w.classList.add('poputil-window-default', 'poputil-hidden');
+	poputil_showElement(w);
+	w.classList.add('poputil-window-default');
 
 	document.body.appendChild(w);
 
@@ -71,7 +76,7 @@ function poputil_createWindow()
 
 function poputilWindow()
 {
-	const w = document.getElementById(poputil_windowName);
+	const w = poputilWindow$();
 	return w === null ? poputil_createWindow() : w;
 }
 
@@ -89,7 +94,7 @@ function poputil_showWindow(w)
 {
 	poputil_showElement(w);
 	// w.classList.remove('poputil-window-default');
-	w.classList.add('poputil-window-active');
+	// w.classList.add('poputil-window-active');
 }
 
 function poputil_defaultWidth()
@@ -146,6 +151,22 @@ function poputil_appendClient(w, c)
 	w.appendChild(c);
 }
 
+const poputil_revealTimeout = 25;
+const poputil_revealClientTimeout = 500;
+
+function poputil_reveal(w, c)
+{
+	poputil_showWindow(w);
+
+	setTimeout(function () {
+		w.classList.add('poputil-window-active');
+
+		setTimeout(function () {
+			poputil_showElement(c);
+		}, poputil_revealClientTimeout);
+	}, poputil_revealTimeout);
+}
+
 function poputilCreateClient(w, options)
 {
 	const {type, content, width = undefined, height = undefined,
@@ -176,8 +197,7 @@ function poputilCreateClient(w, options)
 	w.addEventListener('click', poputil_clickWindow(w));
 	poputil_addKeyupEvent();
 
-	poputil_showElement(c);
-	poputil_showWindow(w);
+	poputil_reveal(w, c);
 
 	return c;
 }
