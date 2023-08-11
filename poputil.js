@@ -8,6 +8,9 @@ var poputil_keyupWindow_current = null;
 
 var poputil_client_defaultStyle = '--poputil-client-default-style';
 
+var poputil_defaultWindowWidth = 1400;
+var poputil_defaultWindowHeight = 600;
+
 function poputil_parentOnlyEvent(element, inner)
 {
 	return function poputil_parentOnlyOuter(event)
@@ -33,7 +36,7 @@ function poputil_closeWindow()
 	w.classList.remove('poputil-window-active');
 
 	const c = document.getElementById(poputil_clientName);
-	c.parentElement.removeChild(c);
+	c !== undefined && c.parentElement.removeChild(c);
 
 	poputil_removeKeyupEvent();
 }
@@ -107,7 +110,7 @@ function poputil_defaultHeight()
 
 function poputil_parseSize(size, defaultSize, windowSize)
 {
-	if (size === undefined)
+	if (size === undefined || size === null)
 		return defaultSize();
 
 	else if (typeof size == 'string' && size.endsWith('%'))
@@ -115,7 +118,7 @@ function poputil_parseSize(size, defaultSize, windowSize)
 		size = size.substring(0, size.length-1);
 		size = parseInt() / 100.0;
 
-		return size * windowSize;
+		size = size * windowSize;
 	}
 
 	return size;
@@ -134,8 +137,11 @@ function poputil_setClientSizeAndPosition(c, width, height, windowWidth, windowH
 	s.width = width;
 	s.height = height;
 
-	s.left = (windowWidth - width) / 2;
-	s.top = (windowHeight - height) / 2;
+	console.log(`width: ${width} / ${windowWidth}`);
+	console.log(`height: ${height} / ${windowHeight}`);
+
+	s.left = Math.abs(windowWidth - width) / 2;
+	s.top = Math.abs(windowHeight - height) / 2;
 
 	// console.log(`top: ${c.style.top} left: ${c.style.left}`);
 	// console.log(`width: ${width} height ${height}`);
@@ -194,8 +200,8 @@ function poputilCreateClient(w, options)
 
 	poputil_setClientSizeAndPosition
 		(c, width, height,
-		 window.innerWidth,
-		 window.innerHeight);
+		 window.innerWidth || poputil_defaultWindowWidth,
+		 window.innerHeight || poputil_defaultWindowHeight);
 
 	poputil_appendClient(w, c);
 
@@ -219,7 +225,7 @@ function poputil(options, blurElement)
 
 
 // Object Model.
-var poputilObject = {open: poputil};
+var poputilObject = {open: poputil, close: poputil_closeWindow};
 
 var poputilObject_ShadowboxCompat =
 {
@@ -230,5 +236,8 @@ var poputilObject_ShadowboxCompat =
 	},
 
 	open: function poputilOpen_ShadowboxCompat(options)
-	{ return poputil(poputilObject_ShadowboxCompat.fromShadowboxOpenOptions(options)); }
+	{ return poputil(poputilObject_ShadowboxCompat
+		.fromShadowboxOpenOptions(options)); },
+
+	close: poputil_closeWindow,
 };
